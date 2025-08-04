@@ -61,6 +61,32 @@ public class Collections {
      *
      */
 
+    /**
+     * 下方hashset应用的方法
+     * @param received -输入的短信内容
+     * @return message -不重复的短信内容
+     */
+
+    static List<Message> process(List<Message> received) {
+        //按sequence去除重复消息
+        Set<Integer> set = new HashSet<>();
+        List<Message> result = new ArrayList<>();
+        for(Message message:received){
+            if(set.add(message.sequence)){
+                result.add(message);
+            }
+        }
+        return result;
+    }
+
+    public static class Message {
+        public final int sequence;
+        public final String text;
+        public Message(int sequence, String text) {
+            this.sequence = sequence;
+            this.text = text;
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -68,27 +94,50 @@ public class Collections {
          * 基本hashset、treeset的几个方法名字差不多
          *
          * Hashset
-         * .add()
+         * .add() return boolean
          * .isEmpty()
          * .size()
          * .clear()
-         * .contains(Object)
+         * .contains(Object) return boolean
          * .toArray()
-         * .remove(object)
+         * .remove(object) return boolean
          */
 
         //hashset实例，如果加入重复的元素，重复的不会被储存
         //不标明hashset里面是什么也是可以的 Hashset hashset= new Hashset<>();
 
-        HashSet<String> hashset = new HashSet<>();
+        Set<String> hashset = new HashSet<>();
 
         hashset.add("Sony");
-        //iterator
-        Iterator<String> tranverse = hashset.iterator();
 
-        while (tranverse.hasNext()) {
-            System.out.println(tranverse.next());
+        // false，添加失败，因为元素已存在
+        System.out.println(hashset.add("Sony"));
+
+        //iterator
+
+        for (String s : hashset) {
+            System.out.println(s);
         }
+
+        //应用：使用hashset去掉重复内容
+
+        List<Message> received = List.of(
+                new Message(1, "Hello!"),
+                new Message(2, "发工资了吗？"),
+                new Message(2, "发工资了吗？"),
+                new Message(3, "去哪吃饭？"),
+                new Message(3, "去哪吃饭？"),
+                new Message(4, "Bye")
+        );
+
+        List<Message> displayMessages = process (received);
+        for (Message message : displayMessages) {
+            System.out.println(message.text);
+        }
+
+
+
+
 
 
 
@@ -109,7 +158,7 @@ public class Collections {
 
 
         /**
-         * List 接口类，有序链表
+         * List 接口类，有序链表，允许添加重复元素
          */
         //通过List接口的方法.of()，根据给定元素快速创建list,这个list不可变，不可改，不属于 ArrayList、LinkedList、Vector等子类
         List<Integer> listOf = List.of(1, 2, 5);
@@ -145,12 +194,29 @@ public class Collections {
 
         List <String> array = new ArrayList<>();
         array.add("A");
+        //允许添加null
+        array.add(null);
+        //null
+        System.out.println(array.get(1));
+
+        //toArray方法，但会丢失类型信息
+        List<Integer> listFast = List.of(1,2,3);
+        //Object[] arrayNew = listFast.toArray();
+
+        Integer[] arrayNew = listFast.toArray(new Integer[listFast.size()]);
+
+        //array变成list
+        Integer[] arrayNum = { 1, 2, 3 };
+        List<Integer> list = List.of(arrayNum);
+
+
+
 
         /**
          * Vector 与arraylist的区别是vector线程安全并且，但也因此arraylist的查询效率比vector要高
          *
          */
-        List <String> list = new Vector<>();
+        List <String> listVector = new Vector<>();
 
         /**
          * Linkedlist基于双向链表实现，链表的特点在这里不赘述了，较之ArrayList更占内存
@@ -177,12 +243,12 @@ public class Collections {
          *
          * | 方法                   | 功能说明                  | 操作类型 | 时间复杂度 |
          * | -------------------- | --------------------- | ---- | ----- |
-         * | `offer(E e)`         | 向队尾添加元素（推荐）           | 增    | O(1)  |
-         * | `add(E e)`           | 向队尾添加元素，若失败抛异常        | 增    | O(1)  |
-         * | `poll()`             | 获取并移除队头元素（为空返回 null）  | 删    | O(1)  |
-         * | `remove()`           | 获取并移除队头元素（为空抛异常）      | 删    | O(1)  |
-         * | `peek()`             | 获取队头元素但不移除（为空返回 null） | 查    | O(1)  |
-         * | `element()`          | 获取队头元素但不移除（为空抛异常）     | 查    | O(1)  |
+         * | `boolean offer(E e)`         | 向队尾添加元素（推荐）           | 增    | O(1)  |
+         * | `E add(E e)`           | 向队尾添加元素，若失败抛异常        | 增    | O(1)  |
+         * | `boolean poll()`             | 获取并移除队头元素（为空返回 null）  | 删    | O(1)  |
+         * | `E remove()`           | 获取并移除队头元素（为空抛异常）      | 删    | O(1)  |
+         * | `boolean peek()`             | 获取队头元素但不移除（为空返回 null） | 查    | O(1)  |
+         * | `E element()`          | 获取队头元素但不移除（为空抛异常）     | 查    | O(1)  |
          * | `isEmpty()`          | 判断队列是否为空              | 查    | O(1)  |
          * | `size()`             | 返回队列中元素个数             | 查    | O(1)  |
          * | `contains(Object o)` | 判断是否包含指定元素            | 查    | O(n)  |
@@ -191,11 +257,38 @@ public class Collections {
          */
 
         Queue<String> queue = new LinkedList<>();
+        System.out.println("Below is queue:");
+        System.out.println(queue.offer("A"));
+        //offer失败时抛false
+        if(queue.offer("A")){
+            System.out.println("added");
+        }
         queue.offer("a");
-        queue.offer("b");
-        queue.offer("c");
+        //poll失败时候抛null
         String head =queue.poll();
         System.out.println(head);
+        //add失败时抛异常
+        try{
+            queue.add("A");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        queue.clear();
+        // 添加3个元素到队列:
+        queue.offer("apple");
+        queue.offer("pear");
+        queue.offer("banana");
+        // 队首永远都是apple，因为peek()不会删除它:
+        System.out.println(queue.peek());
+        // apple
+        System.out.println(queue.peek());
+
+        //获取并删除
+        // apple
+        System.out.println(queue.poll());
+        // pear
+        System.out.println(queue.poll());
 
         Iterator<String> it = queue.iterator();
         while (it.hasNext()) {
@@ -209,6 +302,64 @@ public class Collections {
         while (transverse.hasNext()) {
             System.out.println(transverse.next());
         }
+
+        /**
+         * Priority Queue
+         * PriorityQueue和Queue的区别在于，它的出队顺序与元素的优先级有关
+         * 对PriorityQueue调用remove()或poll()方法，返回的总是优先级最高的元素
+         * 使用PriorityQueue，我们就必须给每个元素定义“优先级”
+         * 要放入的元素并没有实现Comparable接口的话PriorityQueue允许我们提供一个Comparator对象来判断两个元素的顺序
+         * 以下是定义优先级的示例
+         */
+
+        /*
+          class UserComparator implements Comparator<User> {
+              public int compare(User u1, User u2) {
+                  if (u1.number.charAt(0) == u2.number.charAt(0)) {
+                      // 如果两人的号都是A开头或者都是V开头,比较号的大小:
+                      return u1.number.compareTo(u2.number);
+                  }
+                  if (u1.number.charAt(0) == 'V') {
+                      // u1的号码是V开头,优先级高:
+                      return -1;
+                  } else {
+                      return 1;
+                  }
+              }
+          }
+
+          class User {
+              public final String name;
+              public final String number;
+
+              public User(String name, String number) {
+                  this.name = name;
+                  this.number = number;
+              }
+
+              public String toString() {
+                  return name + "/" + number;
+              }
+          }
+         */
+
+
+        /**
+         * Deque
+         * 既可以添加到队尾，也可以添加到队首
+         * 既可以从队首获取，又可以从队尾获取。
+         */
+
+        /**
+         *  	             Queue 	                                  Deque
+         * 添加元素到队尾 	add(E e) / offer(E e) 	addLast(E e) / offerLast(E e)
+         * 取队首元素并删除 	E remove() / E poll() 	E removeFirst() / E pollFirst()
+         * 取队首元素但不删除 	E element() / E peek() 	E getFirst() / E peekFirst()
+         * 添加元素到队首 	无 	addFirst(E e) / offerFirst(E e)
+         * 取队尾元素并删除 	无 	E removeLast() / E pollLast()
+         * 取队尾元素但不删除 	无 	E getLast() / E peekLast()
+         */
+
 
     }
 

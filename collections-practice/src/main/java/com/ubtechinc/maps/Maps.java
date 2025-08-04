@@ -1,12 +1,6 @@
 package com.ubtechinc.maps;
 
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Maps接口相关的数据结构特性及查、增、删、改的调用
@@ -100,147 +94,211 @@ public class Maps {
      * | Set   | `HashSet`                      | 无序去重                 |
      * | Set   | `TreeSet`                      | 自动排序去重               |
      * | Queue | `LinkedList` / `PriorityQueue` | FIFO / 小顶堆           |
-     *
      */
 
 
-    public static void main(String[] args) {
+    public static class Student {
+        public String name;
+        public int score;
 
-        /**
-         * hashtable实例
-         * .put(key,value)
-         * .get(key)
-         * .containsValue(value)
-         * .containsKey(key)
-         * Enumeration aaa = xxx.elements();
-         * enumeration.nextElement()
-         * .isEmpty()
-         * .size()
-         *
-         *
-         */
-
-        Hashtable companies = new Hashtable();
-
-        //insert to map, put(key,value)
-        companies.put("Sony", "Japan");
-
-        // get(key) method is used to retrieve Objects from Hashtable
-        companies.get("Google");
-
-        //remove all entries or all mapping from Hashtable and then re-use it like a new Hashtable
-        //companies.clear();
-
-        //check if it contains a particular value
-        boolean checkValue = companies.containsValue("Japan");
-
-        //check if it contains a particular key
-        boolean checkKey = companies.containsKey("Google");
-
-        //traverse hashtable in java
-        // Hashtable enumeration Example
-        // hashtable.elements() return enumeration of all hashtable values
-        Enumeration enumeration = companies.elements();
-
-        while (enumeration.hasMoreElements()) {
-            System.out.println("hashtable values: " + enumeration.nextElement());
+        public  Student(String name, int score) {
+            this.name = name;
+            this.score = score;
         }
 
-        // use isEmpty method of hashtable to check emptiness of hashtable
-        System.out.println("Is companies hashtable empty: " + companies.isEmpty());
+        @Override
+        public String toString() {
+            return String.format("{%s: score=%d}", name, score);
+        }
 
-        // use hashtable.size() method to find size of hashtable in Java
-        System.out.println("Size of hashtable in Java: " + companies.size());
+        public static void main(String[] args) {
 
-        /**
-         * Hashmap实例，调用方法名和hashtable差不多
-         * 未特别标明则全部为O(1)
-         * put(K key, V value) 插入/修改键值
-         *  get(Object key) 获取 key 对应的 value
-         *
-         *  remove(Object key) 删除键值
-         *  containsKey(Object key)
-         *  containsValue(Object value)
-         *  keySet() 返回所有 key 的集合
-         *  Set<K> O(n)  values() 返回所有 value 的集合O(n)
-         *  entrySet() 返回所有 Map.Entry<K,V> 的集合 O(n)
-         *  clear() 清空所有键值对
-         *  size() 返回映射大小
-         *  isEmpty()
-         *  putIfAbsent(K key, V value) 若 key 不存在才放入
-         *  replace(K key, V value) 替换已有 key 对应的 value
-         */
+            /**
+             * hashtable实例
+             * .put(key,value)
+             * .get(key)
+             * .containsValue(value)
+             * .containsKey(key)
+             * Enumeration aaa = xxx.elements();
+             * enumeration.nextElement()
+             * .isEmpty()
+             * .size()
+             *
+             *
+             */
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("apple", "fruit");
-        map.get("apple");
-        map.remove("apple");
-        map.put("pear", "good");
-        //good
-        System.out.println(map.get("pear"));
-        map.put("pear", "bad");
-        //bad,只能有唯一key，再加值会被冲掉
-        System.out.println(map.get("pear"));
+            Hashtable<String, String> companies = new Hashtable<>();
 
-        //hashmap iterator实例
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("apple", "fruit");
+            //insert to map, put(key,value)
+            companies.put("Sony", "Japan");
 
-        //如果要同时遍历键值
-        Iterator <Map.Entry<String, String>> transverse = hashMap.entrySet().iterator();
-        while (transverse.hasNext()) {
-            //Entry是Map里面的静态接口，需要import
-            Map.Entry<String, String> entry = transverse.next();
-            //此处getKey()，getValue()是Map.entry里面的方法
-            System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+            // get(key) method is used to retrieve Objects from Hashtable
+            companies.get("Google");
+
+            //remove all entries or all mapping from Hashtable and then re-use it like a new Hashtable
+            //companies.clear();
+
+            //check if it contains a particular value
+            boolean checkValue = companies.containsValue("Japan");
+
+            //check if it contains a particular key
+            boolean checkKey = companies.containsKey("Google");
+
+            //traverse hashtable in java
+            // Hashtable enumeration Example
+            // hashtable.elements() return enumeration of all hashtable values
+            Enumeration<String> enumeration = companies.elements();
+
+            while (enumeration.hasMoreElements()) {
+                System.out.println("hashtable values: " + enumeration.nextElement());
+            }
+
+            // use isEmpty method of hashtable to check emptiness of hashtable
+            System.out.println("Is companies hashtable empty: " + companies.isEmpty());
+
+            // use hashtable.size() method to find size of hashtable in Java
+            System.out.println("Size of hashtable in Java: " + companies.size());
+
+            /**
+             * Hashmap实例，调用方法名和hashtable差不多
+             * 未特别标明则全部为O(1)
+             * put(K key, V value) 插入/修改键值
+             *  get(Object key) 获取 key 对应的 value
+             *
+             *  remove(Object key) 删除键值
+             *  containsKey(Object key)
+             *  containsValue(Object value)
+             *  keySet() 返回所有 key 的集合
+             *  Set<K> O(n)  values() 返回所有 value 的集合O(n)
+             *  entrySet() 返回所有 Map.Entry<K,V> 的集合 O(n)
+             *  clear() 清空所有键值对
+             *  size() 返回映射大小
+             *  isEmpty()
+             *  putIfAbsent(K key, V value) 若 key 不存在才放入
+             *  replace(K key, V value) 替换已有 key 对应的 value
+             */
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("apple", "fruit");
+            map.get("apple");
+            map.remove("apple");
+            map.put("pear", "good");
+            //good
+            System.out.println(map.get("pear"));
+            map.put("pear", "bad");
+            //bad,只能有唯一key，再加值会被冲掉
+            System.out.println(map.get("pear"));
+
+            //hashmap iterator实例
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("apple", "fruit");
+
+            //如果要同时遍历键值
+            Iterator<Map.Entry<String, String>> transverse = hashMap.entrySet().iterator();
+            while (transverse.hasNext()) {
+                //Entry是Map里面的静态接口，需要import
+                Map.Entry<String, String> entry = transverse.next();
+                //此处getKey()，getValue()是Map.entry里面的方法
+                System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+
+            }
+            //只遍历值
+            for (String key : hashMap.keySet()) {
+                String value = hashMap.get(key);
+                System.out.println(key + " = " + value);
+            }
+            //对应8.4有一个练习可以做一下
+
+
+            /**
+             * hashmap线程不安全的例子:两个线程同时写入 HashMap，出现了覆盖、冲突或写丢了的情况
+             *
+             * Map<Integer, String> map = new HashMap<>();
+             *
+             *         Thread t1 = new Thread(() -> {
+             *             for (int i = 0; i < 1000; i++) {
+             *                 map.put(i, "Thread1-" + i);
+             *             }
+             *         });
+             *
+             *         Thread t2 = new Thread(() -> {
+             *             for (int i = 1000; i < 2000; i++) {
+             *                 map.put(i, "Thread2-" + i);
+             *             }
+             *         });
+             *
+             *         t1.start();
+             *         t2.start();
+             *         t1.join();
+             *         t2.join();
+             *
+             *         // 预期是 2000 个 key，但由于线程不安全，实际数量可能少
+             *         System.out.println("Map size: " + map.size());
+             *     }
+             */
+
+            /**
+             * enum map
+             * 如果作为key的对象是enum类型，以使用Java集合库提供的一种EnumMap
+             * 它在内部以一个非常紧凑的数组存储value，并且根据enum类型的key直接定位到内部数组的索引，并不需要计算hashCode()
+             * 不但效率最高，而且没有额外的空间浪费
+             *
+             */
+            //EnumMap<K, V> 要求K是enum类型，而这里是String，所以会被标黄
+            //Map<String, Integer> enumMap = new EnumMap<>(Maps.class);
+
+            //如果要通过map调用enummap的话必须是Map<Maps, xxx> enumMap = new EnumMap<>(Maps.class);这样,并且声明enum枚举类，或者调用库里面已经存在的类
+            //enum声明有它要求的格式
+            enum defineMap {
+                A("a"), B("b"), C("c");
+
+                private final String value;
+
+                defineMap(String value) {
+                    this.value = value;
+                }
+
+                public String getValue() {
+                    return value;
+                }
+            }
+
+
+            // 正确的泛型声明
+            Map<defineMap, String> enumMapNew = new EnumMap<>(defineMap.class);
+            enumMapNew.put(defineMap.B, "b");
+            System.out.println(enumMapNew.get(defineMap.B));
+
+            /**
+             * Treemap
+             * treemap接口继承自comparable。使用TreeMap时，放入的Key必须实现Comparable接口。
+             * String、Integer这些类已经实现了Comparable接口，因此可以直接作为Key使用。作为Value的对象则没有任何要求。
+             * 如果作为Key的class没有实现Comparable接口，那么，必须在创建TreeMap时同时指定一个自定义排序算法
+             * 使用TreeMap时，对Key的比较需要正确实现相等、大于和小于逻辑,所以compare类中一定要定义好大于等于小于的情况
+             */
+
+            Map<Student, Integer> mapTree = new TreeMap<>(new Comparator<Student>() {
+                @Override
+                public int compare(Student p1, Student p2) {
+                    if (p1.score == p2.score) {
+                        return 0;
+                    }
+                    return p1.score > p2.score ? -1 : 1;
+                }
+                // 这里，匿名类结束要有 `})`
+            });
+
+
+            mapTree.put(new Student("Tom", 77), 1);
+            mapTree.put(new Student("Bob", 66), 2);
+            mapTree.put(new Student("Lily", 99), 3);
+            for (Student key : mapTree.keySet()) {
+                System.out.println(key);
+            }
+
 
         }
-        //只遍历值
-        for (String key : hashMap.keySet()) {
-            String value = hashMap.get(key);
-            System.out.println(key + " = " + value);
-        }
-        //对应8.4有一个练习可以做一下
-
-        /**
-         * 8.5 enum map
-         *
-         */
-
-
-
-        /**
-         * hashmap线程不安全的例子:两个线程同时写入 HashMap，出现了覆盖、冲突或写丢了的情况
-         *
-         * Map<Integer, String> map = new HashMap<>();
-         *
-         *         Thread t1 = new Thread(() -> {
-         *             for (int i = 0; i < 1000; i++) {
-         *                 map.put(i, "Thread1-" + i);
-         *             }
-         *         });
-         *
-         *         Thread t2 = new Thread(() -> {
-         *             for (int i = 1000; i < 2000; i++) {
-         *                 map.put(i, "Thread2-" + i);
-         *             }
-         *         });
-         *
-         *         t1.start();
-         *         t2.start();
-         *         t1.join();
-         *         t2.join();
-         *
-         *         // 预期是 2000 个 key，但由于线程不安全，实际数量可能少
-         *         System.out.println("Map size: " + map.size());
-         *     }
-         */
-
-
-
 
 
     }
-
-
 }
