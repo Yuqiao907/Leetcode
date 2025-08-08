@@ -477,11 +477,11 @@ public class Streams {
         /**
          * 拥有一些用户，想要根据性别分类成map<key,value>
          */
-        List<User> users = List.of(new User(true,31),new User(false,25),new User(false,45),new User(false,78),new User(false,99),new User(false,58));
+        List<User> users = List.of(new User(true, 31), new User(false, 25), new User(false, 45), new User(false, 78), new User(false, 99), new User(false, 58));
 
-        Map<Boolean,List<User>> genderGroups = users.stream()
+        Map<Boolean, List<User>> genderGroups = users.stream()
                 .collect(Collectors.groupingBy(user -> user.male, toList()));
-                System.out.println(genderGroups);
+        System.out.println(genderGroups);
 
         /**
          * 拥有两组学生，把这两组学生聚到一个组里,根据学生的分数分组,去掉过于低和过于高的分数
@@ -489,10 +489,10 @@ public class Streams {
          *
          */
         //person有name还有score
-        var studentsOne = List.of(new Person("Tom",30), new Person("Sam",90),
-                new Person("Amy",99),new Person("Jeremy",80)).stream();
-        var studentsTwo = List.of(new Person("Alice",30), new Person("Krolin",90),
-                new Person("April",99),new Person("Elisa",77)).stream();
+        var studentsOne = List.of(new Person("Tom", 30), new Person("Sam", 90),
+                new Person("Amy", 99), new Person("Jeremy", 80)).stream();
+        var studentsTwo = List.of(new Person("Alice", 30), new Person("Krolin", 90),
+                new Person("April", 99), new Person("Elisa", 77)).stream();
         var streamMerge = Stream.concat(studentsOne, studentsTwo);
 
         /*
@@ -501,47 +501,51 @@ public class Streams {
                           .collect(Collectors.groupingBy(person -> person.score,Collectors.toList()));
          */
 
-        Map<String,List<Person>> scoreMergeTwo = streamMerge
-                .filter(person -> person.score >=50 && person.score<=95)
+        Map<String, List<Person>> scoreMergeTwo = streamMerge
+                .filter(person -> person.score >= 50 && person.score <= 95)
                 //如果我想按照分数段来分应该怎么办
                 .collect(Collectors.groupingBy(person -> {
-                    int score = person.score;
-                    if(score < 50) {return "F";}
-                    else if(score < 60) {return "M";}
-                    return "Pass";}
-                        ));
+                            int score = person.score;
+                            if (score < 50) {
+                                return "F";
+                            } else if (score < 60) {
+                                return "M";
+                            }
+                            return "Pass";
+                        }
+                ));
 
 
         /**
          * 拥有一组学生，想要按照名字的首字母分组
          */
-        var studentsThree = List.of(new Person("tom",30), new Person("Sam",90),
-                new Person("Amy",99),new Person("Jeremy",80));
+        var studentsThree = List.of(new Person("tom", 30), new Person("Sam", 90),
+                new Person("Amy", 99), new Person("Jeremy", 80));
 
-        Map<String,List<Person>> sortByName = studentsThree.stream()
-                .collect(Collectors.groupingBy(person -> person.name.toLowerCase().substring(0,1), toList()));
+        Map<String, List<Person>> sortByName = studentsThree.stream()
+                .collect(Collectors.groupingBy(person -> person.name.toLowerCase().substring(0, 1), toList()));
         System.out.println(sortByName);
 
         /**
          * 拥有一组学生，想要分数的大小降序排列，并输出为list,并且你想自定义comparator
          */
 
-        Comparator<Person> personComparator = new Comparator<Person>(){
+        Comparator<Person> personComparator = new Comparator<Person>() {
 
             @Override
             public int compare(Person p1, Person p2) {
-                if(p1.score < p2.score) {
-                    return 1;}
-                else if(p1.score > p2.score) {
+                if (p1.score < p2.score) {
+                    return 1;
+                } else if (p1.score > p2.score) {
                     return -1;
+                } else {
+                    return 0;
                 }
-                else {
-                    return 0;}
             }
         };
 
-        var studentsFour = List.of(new Person("Tom",30), new Person("Sam",90),
-                new Person("Amy",99),new Person("Jeremy",80));
+        var studentsFour = List.of(new Person("Tom", 30), new Person("Sam", 90),
+                new Person("Amy", 99), new Person("Jeremy", 80));
         List<Person> sortStudents = studentsFour.stream()
                 .sorted((personComparator))
                 .collect(Collectors.toList());
