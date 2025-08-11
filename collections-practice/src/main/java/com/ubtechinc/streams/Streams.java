@@ -333,9 +333,11 @@ public class Streams {
          *
          */
         Stream<String> streamSample = Stream.of("Apple", "", null, "Pear", "  ", "Orange");
-        List<String> list = streamSample
+        List<String> list;
+        list = streamSample
                 .filter(str -> str != null && !str.isBlank())
-                .collect(toList());
+                .toList();
+                //.collect(Collectors.toList());
 
         /**
          * 存储数组对象：
@@ -363,6 +365,21 @@ public class Streams {
                         // 冒号后面的映射为value:
                         key -> key.substring(key.indexOf(':') + 1)));
         System.out.println(mapConvert);
+
+        /**
+         * 将一串有学生信息的字符串list输出为map<k,v>,并把重复的内容和null去掉
+         *
+         */
+
+        List<String> streamStudent = List.of("April:33","Thomas:89","Claire:100", null ," ");
+        Map<String, Integer> studentMap;
+        streamStudent.stream()
+                .filter(content ->content!=null && !content.isEmpty())
+                .collect(Collectors.toMap(
+                        content ->content.substring(0,content.indexOf(':')),
+                        content ->content.substring(content.indexOf(':')+1)
+                ));
+
 
         /**
          * 分组输出

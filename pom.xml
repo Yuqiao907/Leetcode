@@ -12,7 +12,6 @@
         <module>string-practice</module>
         <module>array-practice</module>
         <module>collections-practice</module>
-        <module>streams-practice</module>
     </modules>
 
     <properties>
