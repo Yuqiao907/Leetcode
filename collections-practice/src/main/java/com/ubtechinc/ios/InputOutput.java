@@ -166,16 +166,11 @@ public class InputOutput {
          *        }
          */
 
-        /**
-         * input stream的Fileinputstream的read方法，close，缓冲、阻塞区与实现
-         *
-         * InputStream并不是一个接口，而是一个抽象类，它是所有输入流的超类。这个抽象类定义的一个最重要的方法就是int read()，签名如下：
-         *public abstract int read() throws IOException;
-         * 这个方法会读取输入流的下一个字节，并返回字节表示的int值（0~255）。如果已读到末尾，返回-1表示不能继续读取了。
-         *如何读取文件的示例如下：
-         */
-
-
+        /// input stream的Fileinputstream的read方法，close，缓冲、阻塞区与实现
+        /// InputStream并不是一个接口，而是一个抽象类，它是所有输入流的超类。这个抽象类定义的一个最重要的方法就是int read()，签名如下：
+        ///public abstract int read() throws IOException;
+        /// 这个方法会读取输入流的下一个字节，并返回字节表示的int值（0~255）。如果已读到末尾，返回-1表示不能继续读取了。
+        ///如何读取文件的示例如下：
         //也许会存在错误不能读取，所以方法必须抛异常和用try，所有涉及到inputstream、outputstream的都要如此
         /*
         public void readFile() throws IOException {
@@ -314,7 +309,7 @@ public class InputOutput {
         /// static void copy(String source, String target) throws IOException {
         /// 		InputStream input = new FileInputStream(source);
         /// 		OutputStream output = new FileOutputStream(target);
-        /// 	    //这里是简化写法，try (input; output) 这一句的唯一目的就是——告诉 try-with-resources 这两个流要自动 close，而不是重新创建它们
+        /// 	    //这里是简化写法，try (input; output) 这一句的唯一目的就是——告诉 try-with-resources 这两个流要自动 close，而不是重新创建它们，这样try里面也不需要重新new对象
         /// 		try (input; output) {
         /// 			//建立缓存5M（1024*1024*5）大小
         /// 			byte[] b = new byte[5242880];
@@ -331,9 +326,38 @@ public class InputOutput {
         ///}
 
         /**
-         * mark()和reset()方法
+         * mark()和reset()方法,两个配套使用
+         * 正常读 → mark() → 再读一些数据 → reset() → 从 mark 的地方重新开始读
+         * mark中的readlimit是限制mark生效的的字节，避免mark生效时间过长一直回到mark处循环读取
+         * 如果你在 mark() 之后读的字节数 超过了 readlimit，这个标记就会失效，再调用 reset() 会抛异常（IOException）或位置不对。
+         *
          */
+        //也可以像这样不传入文件直接传入bytes的
+        InputStream input = new ByteArrayInputStream("cctv".getBytes());
+        //计算是第几次读取
+        int count = 0;
+        //每次读取的字节数
+        byte[] bytes = new byte[3];
+        //读取每次返回的是数字
+        int dataRead = input.read(bytes);
+        while (dataRead != -1) {
+            //把每一次读取的内容打出来
+            System.out.print(new String(bytes, 0, dataRead, "UTF-8"));
+            count++;
+            if (count == 2) {
+                input.mark(16);
+            }
+            //继续往后读取
+            dataRead = input.read(bytes);
+        }
 
+        //将内容读完一轮之后，重新回到mark的位子
+        input.reset();
+        dataRead = input.read(bytes);
+        while (dataRead != -1) {
+            System.out.print(new String(bytes));
+            dataRead = input.read(bytes);
+        }
 
 
     }
