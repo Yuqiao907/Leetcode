@@ -75,7 +75,7 @@ public class InputOutput {
 
          */
 
-        File file = new File("C:\\Users\\MacBook Air");
+        File file = new File("C:\\Users\\MacBook Air\\test.txt");
         System.out.println(file.isDirectory());
         readfile(file);
 
