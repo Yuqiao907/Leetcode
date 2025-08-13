@@ -1,8 +1,12 @@
 package com.ubtechinc.ios;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
 
 /**
  * IO
@@ -357,6 +361,64 @@ public class InputOutput {
         while (dataRead != -1) {
             System.out.print(new String(bytes));
             dataRead = input.read(bytes);
+        }
+
+
+        /**
+         * 一些file文件的用法：
+         * 1、将txt文件读取成string
+         * 2、写入文件
+         */
+
+        /**
+         * //将全部文件读成byte,还有.readString()、readAllLines()
+         * //byte[] dataByte = Files.readAllBytes(Path.of("/path/to/file.txt"));
+         * //String content1 = Files.readString(Path.of("/path/to/file.txt"));
+         * //List<String> lines = Files.readAllLines(Path.of("/path/to/file.txt"));
+         */
+
+
+        /**
+         * // 写入二进制文件:
+         * byte[] data = ...;
+         * Files.write(Path.of("/path/to/file.txt"), data);
+         * // 写入文本并指定编码:
+         * Files.writeString(Path.of("/path/to/file.txt"), "文本内容...", StandardCharsets.ISO_8859_1);
+         * // 按行写入文本:
+         * List<String> lines = ...;
+         * Files.write(Path.of("/path/to/file.txt"), lines);
+         */
+
+
+
+        /**
+         * 关于filter模式和包装
+         * 如果想用filter的模式同时实现能够不通过手动解压或者创建临时文件就
+         */
+        // 压缩文件路径
+        String filePath = "logs.txt.gz";
+
+        try (
+                // 基础流：从文件读取字节
+                InputStream fileStream = new FileInputStream(filePath);
+
+                // 第一层包装：加缓冲，提高读性能
+                InputStream bufferedStream = new BufferedInputStream(fileStream);
+
+                // 第二层包装：解压 gzip
+                InputStream gzipStream = new GZIPInputStream(bufferedStream);
+
+                // 第三层包装：转成字符流，方便按行读取
+                BufferedReader reader = new BufferedReader(new InputStreamReader(gzipStream, StandardCharsets.UTF_8))
+        )
+        {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 处理每行数据
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
