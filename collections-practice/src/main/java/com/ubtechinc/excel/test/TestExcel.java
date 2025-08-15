@@ -34,6 +34,8 @@ public class TestExcel {
          * •  省去额外类文件
          * •  代码结构集中（读 Excel 的逻辑和监听实现放在一起）
          *
+         * 但是一般来说做项目的时候还是推荐不要用匿名类，另外新建一个子类来implement
+         *
          * 总之监听逻辑比较简单的时候这么做合适，不然还是适合新写一个类implement AnalysisEventListener<Student>()，就像这样：
          * public class MyStudentListener extends AnalysisEventListener<Student> {
          *     ...

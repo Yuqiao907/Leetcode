@@ -12,6 +12,7 @@
         <module>string-practice</module>
         <module>array-practice</module>
         <module>collections-practice</module>
+        <module>sql-practice</module>
     </modules>
 
     <properties>
@@ -44,6 +45,13 @@
             <artifactId>log4j-core</artifactId>
             <version>2.20.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.0.0</version>
+        </dependency>
+
     </dependencies>
 
 
