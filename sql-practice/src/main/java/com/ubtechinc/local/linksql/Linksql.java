@@ -1,6 +1,6 @@
-package com.ubtechinc.concept.linksql;
+package com.ubtechinc.local.linksql;
 
-import com.ubtechinc.concept.utils.JdbcUtils;
+import com.ubtechinc.local.utils.JdbcUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,6 +54,7 @@ public class Linksql {
 
 
         //建表 SQL（如果表不存在则创建）
+        //一般在工作的实际操作中不会创建表，只会调动改变数据库里面的数据
         String createTableSql = """
                 create table if not exists stu (
                                      id INT PRIMARY KEY,
@@ -70,7 +71,7 @@ public class Linksql {
         //需要执行的sql语句
         //定义一个 SQL 插入语句，往 stu 表中插入 id、name 和 age 三个字段。
         //这里用 ? 是 占位符，表示后面要通过代码动态赋值。
-        //这是在已经创建的表里插入东西，不是创建表
+        //这是在已经创建的表stu里插入东西，不是创建表
         var sql = "insert into stu(id,name,age) values(?,?,?)";
         //获取预处理对象，并给参数赋值
         //获取一个 PreparedStatement 对象，用来执行 SQL。
@@ -89,44 +90,39 @@ public class Linksql {
         // •  返回值 i 表示受影响的行数（比如插入一条数据就是 1）。
         int i = statement.executeUpdate();
         System.out.println(i);
+
+        /**
+         * 以下是一个规范的表头创建，comment是必须要写的，是团队协作的时候讲述每一个变量的功能
+         */
+
+        /**
+         * CREATE TABLE `ucsp_user` (
+         *   `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+         *   `app_id` int(11) NOT NULL COMMENT '应用ID',
+         *   `username` varchar(32) NOT NULL COMMENT '用户名(默认为UUID)',
+         *   `nickname` varchar(64) NOT NULL COMMENT '用户昵称(默认值为手机号或邮箱)',
+         *   `password` char(60) NOT NULL COMMENT '用户密码',
+         *   `area_code` varchar(5) DEFAULT NULL COMMENT '手机区号',
+         *   `mobile` varchar(24) DEFAULT NULL COMMENT '手机号',
+         *   `email` varchar(152) DEFAULT NULL COMMENT '用户邮箱',
+         *   `gender` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户性别(0:保密;1:男;2:女)',
+         *   `birthday` date DEFAULT NULL COMMENT '用户生日',
+         *   `avatar` varchar(684) DEFAULT NULL COMMENT '用户头像',
+         *   `area` varchar(3) DEFAULT NULL COMMENT '用户所属国家编码',
+         *   `register_ip` varchar(64) DEFAULT NULL COMMENT '注册时的ip',
+         *   `last_login_time` datetime DEFAULT NULL COMMENT '最近一次登录时间',
+         *   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+         *   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+         *   PRIMARY KEY (`user_id`)
+         * ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='C端用户信息表';
+         */
+
         //传上去进行完操作之后就关闭jdbc连接
         statement.close();
         connection.close();
 
 
-        /**
-         * // 1. 获取数据库连接
-         *         Connection connection = JdbcUtils.getConnection();
-         *
-         *         // 2. 建表 SQL（如果表不存在则创建）
-         *         String createTableSql = """
-         *             CREATE TABLE IF NOT EXISTS stu (
-         *                 id INT PRIMARY KEY,
-         *                 name VARCHAR(50),
-         *                 age INT
-         *             )
-         *         """;
-         *         try (Statement createStatement = connection.createStatement()) {
-         *             createStatement.execute(createTableSql);
-         *             System.out.println("表 stu 已创建（如果之前不存在）");
-         *         }
-         *
-         *         // 3. 插入数据 SQL
-         *         String insertSql = "INSERT INTO stu(id, name, age) VALUES (?, ?, ?)";
-         *         try (PreparedStatement statement = connection.prepareStatement(insertSql)) {
-         *             statement.setInt(1, 14);
-         *             statement.setString(2, "李四");
-         *             statement.setInt(3, 16);
-         *
-         *             int rowsInserted = statement.executeUpdate();
-         *             System.out.println("成功插入记录数: " + rowsInserted);
-         *         }
-         *
-         *         // 4. 关闭连接
-         *         connection.close();
-         *         System.out.println("数据库连接已关闭");
-         *     }
-         */
+
 
 
     }

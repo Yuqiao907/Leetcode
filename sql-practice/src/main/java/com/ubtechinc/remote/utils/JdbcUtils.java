@@ -1,4 +1,4 @@
-package com.ubtechinc.concept.utils;
+package com.ubtechinc.remote.utils;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -29,7 +29,7 @@ public class JdbcUtils {
             //1.新建属性集对象
             Properties properties = new Properties();
             //2通过反射，新建字符输入流，读取db.properties文件
-            InputStream input = JdbcUtils.class.getClassLoader().getResourceAsStream("db.properties");
+            InputStream input = com.ubtechinc.local.utils.JdbcUtils.class.getClassLoader().getResourceAsStream("db.properties.remote");
             //3.将输入流中读取到的属性，加载到properties属性集对象中
             properties.load(input);
             //4.根据键，获取properties中对应的值

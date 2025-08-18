@@ -1,4 +1,4 @@
-package com.ubtechinc.concept;
+package com.ubtechinc.local;
 
 /**
  *简单介绍sql的概念
