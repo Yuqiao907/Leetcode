@@ -81,6 +81,14 @@ public class Linksql {
             statement.setString(2, "12zz");
             statement.setString(3, "1234567890");
 
+            AdjustData.addUser(new User("王五","h8h8h8h","ks0uqo"));
+            AdjustData.EmptyUserMobile("ks0uqo");
+            AdjustData.addUser(new User("小六","h8h8h8h","ks0uqo"));
+            AdjustData.addUser(new User("小七","h8h8h8h","ks0uqo"));
+
+
+
+
 
             int rowsInserted = statement.executeUpdate();
             System.out.println("成功插入记录数: " + rowsInserted);

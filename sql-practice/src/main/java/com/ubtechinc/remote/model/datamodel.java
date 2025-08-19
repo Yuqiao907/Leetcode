@@ -3,7 +3,7 @@ package com.ubtechinc.remote.model;
 public class datamodel {
 
     public static class User {
-        private int id;
+
         private String userName;
         private String password;
         private String mobile;
@@ -17,8 +17,7 @@ public class datamodel {
         }
 
         // Getter 和 Setter 方法
-        public int getId() { return id; }
-        public void setId(int id) { this.id = id; }
+
         public String getUserName() { return userName; }
         public void setUserName(String userName) { this.userName = userName; }
         public String getPassword() { return password; }
@@ -28,7 +27,7 @@ public class datamodel {
 
         @Override
         public String toString() {
-            return id + " | " + userName + " | " + password + " | " + mobile;
+            return  " | " + userName + " | " + password + " | " + mobile;
         }
     }
 }
