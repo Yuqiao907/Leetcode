@@ -1,10 +1,12 @@
 package com.ubtechinc.remote.adjustdata;
+
 import com.ubtechinc.remote.utils.JdbcUtils;
 import com.ubtechinc.remote.model.datamodel.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 public class AdjustData {
 
     // 添加用户
@@ -92,11 +94,6 @@ public class AdjustData {
         }
         return list;
     }
-
-    //查询特定用户
-
-
-
 
 
 }

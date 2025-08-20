@@ -3,6 +3,7 @@ package com.ubtechinc.remote.linksql;
 import com.ubtechinc.remote.utils.JdbcUtils;
 import com.ubtechinc.remote.adjustdata.AdjustData;
 import com.ubtechinc.remote.model.datamodel.User;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -17,10 +18,7 @@ import java.util.Properties;
 public class Linksql {
 
 
-
     public static void main(String[] args) throws SQLException {
-
-
 
 
         /**
@@ -55,7 +53,6 @@ public class Linksql {
          */
 
 
-
         // 1. 获取数据库连接
         Connection connection = JdbcUtils.getConnection();
         // 2. 建表 SQL
@@ -81,13 +78,13 @@ public class Linksql {
             statement.setString(2, "12zz");
             statement.setString(3, "1234567890");
 
-            AdjustData.addUser(new User("王五","h8h8h8h","ks0uqo"));
+            /**
+             * 表的调、改
+             */
+            AdjustData.addUser(new User("王五", "h8h8h8h", "ks0uqo"));
             AdjustData.EmptyUserMobile("ks0uqo");
-            AdjustData.addUser(new User("小六","h8h8h8h","ks0uqo"));
-            AdjustData.addUser(new User("小七","h8h8h8h","ks0uqo"));
-
-
-
+            AdjustData.addUser(new User("小六", "h8h8h8h", "ks0uqo"));
+            AdjustData.addUser(new User("小七", "h8h8h8h", "ks0uqo"));
 
 
             int rowsInserted = statement.executeUpdate();
@@ -100,14 +97,8 @@ public class Linksql {
         connection.close();
         System.out.println("数据库连接已关闭");
 
-        /**
-         * 表的调、改、查
-         */
-
 
     }
-
-
 
 
 }

@@ -122,9 +122,6 @@ public class Linksql {
         connection.close();
 
 
-
-
-
     }
 }
 
