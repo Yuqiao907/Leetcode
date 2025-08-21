@@ -1,7 +1,7 @@
 package com.ubtechinc.remote.adjustdata;
 
 import com.ubtechinc.remote.utils.JdbcUtils;
-import com.ubtechinc.remote.model.datamodel.User;
+import com.ubtechinc.remote.model.Datamodel.User;
 
 import java.sql.*;
 import java.util.ArrayList;

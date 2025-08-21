@@ -6,7 +6,7 @@ package com.ubtechinc.leetcode;
  * @date 2025/8/13 23:12
  */
 
-public class basic {
+public class Basic {
 
     /**
      *
@@ -154,7 +154,7 @@ public class basic {
          * | 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
          * | 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
          * +----+---------------+---------------------------+-------+---------+
-         * mysql> SELECT * FROM access_log;
+         * access_log:
          * +-----+---------+-------+------------+
          * | aid | site_id | count | date       |
          * +-----+---------+-------+------------+
@@ -207,7 +207,7 @@ public class basic {
          * select c1.name
          * from customer c1
          *group by c1.name
-         * having c1.referr_id is null or c1c1.referr_id!=2
+         * having c1.referr_id is null or c1.referr_id!=2
          *
          *
          *select c1.name

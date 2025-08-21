@@ -5,8 +5,7 @@ package com.ubtechinc.remote.model;
  * @author MacBook Air
  * @date 2025/8/20 6:08
  */
-
-public class datamodel {
+public class Datamodel {
 
     public static class User {
 

@@ -2,11 +2,9 @@ package com.ubtechinc.remote.linksql;
 
 import com.ubtechinc.remote.utils.JdbcUtils;
 import com.ubtechinc.remote.adjustdata.AdjustData;
-import com.ubtechinc.remote.model.datamodel.User;
+import com.ubtechinc.remote.model.Datamodel.User;
 
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 
 /**
  * 公司远端sql数据库的连接
